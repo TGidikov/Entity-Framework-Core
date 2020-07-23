@@ -1,0 +1,219 @@
+Car Dealer
+1. Setup Database
+A car dealer needs information about cars, their parts, parts suppliers, customers and sales. 
+•	Cars have make, model, travelled distance in kilometers
+•	Parts have name, price and quantity
+•	Part supplier have name and info whether he uses imported parts
+•	Customer has name, date of birth and info whether he is young driver (Young driver is a driver that has less than 2 years of experience. Those customers get additional 5% off for the sale.)
+•	Sale has car, customer and discount percentage
+A price of a car is formed by total price of its parts.
+ 
+•	A car has many parts and one part can be placed in many cars
+•	One supplier can supply many parts and each part can be delivered by only one supplier
+•	In one sale, only one car can be sold
+•	Each sale has one customer and a customer can buy many cars
+
+
+2. Import Data
+Import data from the provided files (suppliers.json, parts.json, cars.json, customers.json)
+
+
+Query 10.Import Suppliers
+NOTE: You will need method public static string ImportSuppliers(CarDealerContext context, string inputJson) and public StartUp class. 
+Import the suppliers from the provided file suppliers.json. 
+Your method should return string with message $"Successfully imported {Suppliers.Count}.";
+
+
+Query 11.Import Parts
+NOTE: You will need method public static string ImportParts(CarDealerContext context, string inputJson) and public StartUp class. 
+Import the parts from the provided file parts.json. If the supplierId doesn’t exists, skip the record.
+Your method should return string with message $"Successfully imported {Parts.Count}.";
+
+
+Query 12.Import Cars
+NOTE: You will need method public static string ImportCars(CarDealerContext context, string inputJson) and public StartUp class. 
+Import the cars from the provided file cars.json.
+Your method should return string with message $"Successfully imported {Cars.Count}.";
+
+
+Query 13.Import Customers
+NOTE: You will need method public static string ImportCustomers(CarDealerContext context, string inputJson) and public StartUp class. 
+Import the customers from the provided file customers.json.
+Your method should return string with message $"Successfully imported {Customers.Count}.";
+
+
+Query 14.Import Sales
+NOTE: You will need method public static string ImportSales(CarDealerContext context, string inputJson) and public StartUp class. 
+Import the sales from the provided file sales.json.
+Your method should return string with message $"Successfully imported {Sales.Count}.";
+3. Query and Export Data
+Write the below described queries and export the returned data to the specified format. Make sure that Entity Framework generates only a single query for each task.
+
+
+Query 15. Export Ordered Customers
+NOTE: You will need method public static string GetOrderedCustomers(CarDealerContext context) and public StartUp class. 
+Get all customers ordered by their birth date ascending. If two customers are born on the same date first print those who are not young drivers (e.g. print experienced drivers first). Export the list of customers to JSON in the format provided below.
+ordered-customers.json
+[
+  {
+    "Name": "Louann Holzworth",
+    "BirthDate": " 01/10/1960",
+    "IsYoungDriver": false
+  },
+  {
+    "Name": "Donnetta Soliz",
+    "BirthDate": "01/10/1963",
+    "IsYoungDriver": true
+  },
+  ...
+]
+
+ Query 16.Export Cars from Make Toyota
+NOTE: You will need method public static string GetCarsFromMakeToyota(CarDealerContext context) and public StartUp class. 
+Get all cars from make Toyota and order them by model alphabetically and by travelled distance descending. Export the list of cars to JSON in the format provided below.
+
+
+toyota-cars.json
+[
+  {
+    "Id": 134,
+    "Make": "Toyota",
+    "Model": "Camry Hybrid",
+    "TravelledDistance": 486872832,
+  },
+  {
+    "Id": 139,
+    "Make": "Toyota",
+    "Model": "Camry Hybrid",
+    "TravelledDistance": 397831570,
+  },
+...
+]
+
+
+Query 17.Export Local Suppliers
+NOTE: You will need method public static string GetLocalSuppliers(CarDealerContext context) and public StartUp class. 
+Get all suppliers that do not import parts from abroad. Get their id, name and the number of parts they can offer to supply. Export the list of suppliers to JSON in the format provided below.
+local-suppliers.json
+[
+  {
+    "Id": 2,
+    "Name": "Agway Inc.",
+    "PartsCount": 3
+  },
+  {
+    "Id": 4,
+    "Name": "Airgas, Inc.",
+    "PartsCount": 2w
+  },
+  ...
+]
+
+
+Query 18.Export Cars with Their List of Parts
+NOTE: You will need method public static string GetCarsWithTheirListOfParts(CarDealerContext context) and public StartUp class. 
+Get all cars along with their list of parts. For the car get only make, model and travelled distance and for the parts get only name and price (formatted to 2nd digit after the decimal point). Export the list of cars and their parts to JSON in the format provided below.
+cars-and-parts.json
+[
+  {
+    "car": {
+      "Make": "Opel",
+      "Model": "Omega",
+      "TravelledDistance": 176664996
+    },
+    "parts": []
+  },
+  {
+    "car": {
+      "Make": "Opel",
+      "Model": "Astra",
+      "TravelledDistance": 516628215
+    },
+    "parts": []
+  },
+  {
+    "car": {
+      "Make": "Opel",
+      "Model": "Astra",
+      "TravelledDistance": 156191509
+    },
+    "parts": []
+  },
+  {
+    "car": {
+      "Make": "Opel",
+      "Model": "Corsa",
+      "TravelledDistance": 347259126
+    },	
+    "parts": [
+      {
+        "Name": "Pillar",
+        "Price": "100.99"
+      },
+      {
+        "Name": "Valance",
+        "Price": "1002.99"
+      },
+      {
+        "Name": "Front clip",
+        "Price": "100.00"
+      }
+    ]
+  },...
+]
+
+
+Query 19.Export Total Sales by Customer
+NOTE: You will need method public static string GetTotalSalesByCustomer(CarDealerContext context) and public StartUp class. 
+Get all customers that have bought at least 1 car and get their names, bought cars count and total spent money on cars. Order the result list by total spent money descending then by total bought cars again in descending order. Export the list of customers to JSON in the format provided below.
+customers-total-sales.json
+[
+  {
+    "fullName": " Johnette Derryberry",
+    "boughtCars": 5,
+    "spentMoney": 13529.25
+  },
+  {
+    "fullName": " Zada Attwood",
+    "boughtCars": 6,
+    "spentMoney": 13474.31
+ },
+  {
+    "fullName": " Donnetta Soliz",
+    "boughtCars": 3,
+    "spentMoney": 8922.22
+  },
+...
+]
+
+
+Query 20.Export Sales with Applied Discount
+NOTE: You will need method public static string GetSalesWithAppliedDiscount(CarDealerContext context) and public StartUp class. 
+Get first 10 sales with information about the car, customer and price of the sale with and without discount. Export the list of sales to JSON in the format provided below.
+sales-discounts.json
+ [
+  {
+    "car": {
+      "Make": "Seat",
+      "Model": "Mii",
+      "TravelledDistance": 473519569
+    },
+    "customerName": "Ann Mcenaney",
+    "Discount": "30.00",
+    "price": "2176.37",
+    "priceWithDiscount": "1523.46"
+  },
+  {
+    "car": {
+      "Make": "Renault",
+      "Model": "Alaskan",
+      "TravelledDistance": 303853081
+    },
+    "customerName": "Taina Achenbach",
+    "Discount": "10.00",
+    "price": "808.76",
+    "priceWithDiscount": "727.88"
+  },
+  ...
+]
+
